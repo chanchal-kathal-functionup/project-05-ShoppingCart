@@ -1,26 +1,38 @@
- const mongoose=require('mongoose')
 
- const productSchema=new mongoose.Schema({
+const mongoose = require('mongoose');
+
+
+const productSchema = new mongoose.Schema({
     title: {
-        type:String,
-        required:true,
-        unique:true
+        type: String,
+        required: 'Title is required',
+        unique: true,
+        trim: true
     },
     description: {
-        type:String,
-        required:true,
+        type: String,
+        required: 'Description is required',
+        trim: true
     },
     price: {
+
         type:Number,
         required:true, 
-        //valid number/decimal
+        //valid number/decim
+        type: Number,
+        required: 'Price is required'
+
     },
     currencyId: {
-        type:String,
-        required:true, //INR
+        type: String,
+        required: "Currency Id is required",
+        enum: ['INR'],
+        trim:true,
     },
-    currencyFormat: { type:String,
-        required:true,// Rupee symbol
+    currencyFormat: {
+        type: String,
+        trim:true,
+        required: 'Currrency format is required',
     },
     isFreeShipping: {
         type:Boolean,
@@ -42,13 +54,10 @@
         default:null //when the document is deleted
     }, 
     isDeleted: {
-        type:Boolean,
-         default: false
-        },
-   
-  
+        type: Boolean,
+        default: false
+    },
 
- },
- {timestamps:true}
- );
-   module.exports=mongoose.model('product',productSchema) 
+}, { timestamps: true });
+
+module.exports=mongoose.model('product',productSchema) 

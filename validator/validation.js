@@ -2,9 +2,9 @@ const mongoose=require('mongoose')
 //
 
 const isValid = function (value) {
-  if (typeof value === 'undefined' || value === null) return false
-  if (typeof value === 'string' && value.trim().length === 0) return false
-  return true;
+  if (typeof value === 'undefined' || value === null) return true
+  if (typeof value === 'string' && value.trim().length === 0) return true
+  return false;
 }
 
   // /STRING VALIDATION BY REJEX
@@ -74,7 +74,19 @@ const isValidArray = function (object){
  const isValidObjectId = (objectId) => {
     return mongoose.Types.ObjectId.isValid(objectId);
   }
- 
+  const isValidSize = (size)=> {
+   
+    const validSize = size.split(",").map(x => x.toUpperCase().trim())
+   
+    let givenSizes = ["S", "XS", "M", "X", "L", "XXL", "XL"]
+  
+    for (let i = 0; i < validSize.length; i++) {
+      if (!givenSizes.includes(validSize[i])) {
+        return false
+      }
+    }
+    return validSize
+  }
   module.exports={isValid, isValidBody,isValidString,
     isValidPhone,isValidEmail,isValidPassword, 
-    isValidstreet,isValidpincode,isValidfeild,isValidPrice, isValidArray,isValidObjectId}
+    isValidstreet,isValidpincode,isValidfeild,isValidPrice, isValidArray,isValidObjectId,isValidSize}

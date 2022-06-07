@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {createUser,loginUser,getUser}=require('../controllers/userController')
-const{ createProduct,deleteProduct}= require('../controllers/productController')
+const {createUser,loginUser,getUser,updateUserById}=require('../controllers/userController')
+const{ createProduct,deleteProduct,getProduct,getProductById, updateProduct}= require('../controllers/productController')
+const{createCart,getCart,updateCart, deleteCart} = require ('../controllers/cartController')
+const{createOrder,updateOrder}=require('../controllers/orderController')
 
 //POST /register
 router.post('/register',createUser)
@@ -10,11 +12,45 @@ router.post('/login',loginUser)
 
 router.get('/user/:userId/profile',getUser)
 
+router.put('/user/:userId/profile',updateUserById)
 
 
-router.post('/product',createProduct)
-//router.get('/products/:productId',getById)
+//FEATURE II - Product APIs
+
+router.post('/products',createProduct)
+
+router.get('/products',getProduct)
+
+router.get('/products/:productId',getProductById)
+
+router.put('/products/:productId',updateProduct)
+
 router.delete('/products/:productId',deleteProduct)
+
+//FEATURE III - Cart
+
+router.post('/users/:userId/cart', createCart)
+
+router.get('/users/:userId/cart',getCart)
+
+router.delete('/users/:userId/cart',deleteCart)
+ router.put('/users/:userId/cart',updateCart)
+
+ //FEATURE IV - Order
+
+router.post('/users/:userId/orders', createOrder)
+
+router.put('/users/:userId/orders', updateOrder)
+
+
+
+
+
+router.delete("*", (req,res) =>{
+
+    return res.status(404).send({ message:"Page Not Found"})
+})
+
 
 
 module.exports = router;
