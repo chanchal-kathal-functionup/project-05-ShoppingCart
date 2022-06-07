@@ -4,15 +4,16 @@ const {createUser,loginUser,getUser,updateUserById}=require('../controllers/user
 const{ createProduct,deleteProduct,getProduct,getProductById, updateProduct}= require('../controllers/productController')
 const{createCart,getCart,updateCart, deleteCart} = require ('../controllers/cartController')
 const{createOrder,updateOrder}=require('../controllers/orderController')
+const{ authentication ,authorization}= require('../middlewares/auth');
 
 //POST /register
 router.post('/register',createUser)
 //POST/login
 router.post('/login',loginUser)
 
-router.get('/user/:userId/profile',getUser)
+router.get('/user/:userId/profile',authentication,authorization,getUser)
 
-router.put('/user/:userId/profile',updateUserById)
+router.put('/user/:userId/profile',authentication,authorization,updateUserById)
 
 
 //FEATURE II - Product APIs
@@ -29,18 +30,18 @@ router.delete('/products/:productId',deleteProduct)
 
 //FEATURE III - Cart
 
-router.post('/users/:userId/cart', createCart)
+router.post('/users/:userId/cart',authentication, authorization,createCart)
 
-router.get('/users/:userId/cart',getCart)
+router.get('/users/:userId/cart',authentication,authorization,getCart)
 
-router.delete('/users/:userId/cart',deleteCart)
- router.put('/users/:userId/cart',updateCart)
+router.delete('/users/:userId/cart',authentication,authorization,deleteCart)
+ router.put('/users/:userId/cart',authentication,authorization,updateCart)
 
  //FEATURE IV - Order
 
-router.post('/users/:userId/orders', createOrder)
+router.post('/users/:userId/orders',authentication,authorization, createOrder)
 
-router.put('/users/:userId/orders', updateOrder)
+router.put('/users/:userId/orders', authentication,authorization,updateOrder)
 
 
 
